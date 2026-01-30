@@ -1,6 +1,6 @@
 # Weather App (In Class)
 
-A simple, real-time weather application built with vanilla HTML, CSS, and JavaScript.
+A simple, real-time weather application built with HTML, CSS, and JavaScript.
 
 ## Features
 
