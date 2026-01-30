@@ -150,11 +150,11 @@
     const day = document.querySelector(".day");
     const description = document.querySelector(".description");
     const emoji = document.querySelector(".emoji");
-
+    // Fetch weather data on page load using auto:ip \
     fetch(
-      `https://api.weatherapi.com/v1/current.json?key=1f707380359e4d0ea8650134263001&q=pune&aqi=no`,
+      `https://api.weatherapi.com/v1/current.json?key=1f707380359e4d0ea8650134263001&q=auto:ip&aqi=no`,
     )
-      .then((response) => response.json()) // Convert response to JSON
+      .then((response) => response.json())
       .then((data) => {
         const dateStr = data.location.localtime.split(" ")[0];
         const year = dateStr.split("-")[0];
@@ -173,7 +173,7 @@
         day.textContent = dayName;
 
         description.textContent = data.current.condition.text;
-        emoji.src = data.current.condition.icon;
+        emoji.src = "https:" + data.current.condition.icon;
       })
       .catch((error) => console.error("Error fetching weather:", error));
 
@@ -203,7 +203,7 @@
           day.textContent = dayName;
 
           description.textContent = data.current.condition.text;
-          emoji.src = data.current.condition.icon;
+          emoji.src = "https:" + data.current.condition.icon;
         })
         .catch((error) => console.error("Error fetching weather:", error));
 
