@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: darkslategrey;
+      }
+      header {
+        height: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: slategrey;
+        padding: 4em;
+      }
+      footer {
+        height: 15em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input::placeholder {
+        color: white;
+      }
+      .text {
+        font-size: 18em;
+        color: rgb(27, 47, 47);
+        position: fixed;
+        top: 60%;
+        font-weight: bolder;
+      }
+      .container {
+        display: flex;
+        /* flex-direction: column; */
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        color: white;
+        gap: 2em;
+      }
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="searchbar">
+        <input
+          style="
+            padding: 10px;
+            background-color: slategrey;
+            border: 2px solid white;
+          "
+          type="text"
+          placeholder="Enter Location"
+        />
+        <button style="padding: 10px; color: rgb(74, 74, 74)">Search</button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="temp">20°C</div>
+        <div class="location">
+          <div class="city">Kathmandu</div>
+          <span class="time"> 12:00 </span><span class="date"> 12/12/2024</span
+          ><span class="day"> Monday</span>
+        </div>
+        <div class="status">
+          <img src="//cdn.weatherapi.com/weather/64x64/day/116.png" alt="" />
+          <div class="description">Sunny</div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="text">Weather</div>
+    </footer>
+  </body>
+  <script>
+    // API Key for WeatherAPI
+    const API_KEY = "1f707380359e4d0ea8650134263001";
+    // Base URL for the Weather API requests
+    const BASE_URL = "https://api.weatherapi.com/v1";
+
+    // Select DOM elements to interact with
+    const searchInput = document.querySelector(".searchbar input");
+    const searchButton = document.querySelector(".searchbar button");
+    const temp = document.querySelector(".temp");
+    const city = document.querySelector(".city");
+    const time = document.querySelector(".time");
+    const date = document.querySelector(".date");
+    const day = document.querySelector(".day");
+    const description = document.querySelector(".description");
+    const emoji = document.querySelector(".emoji");
+
+    // Add click event listener to the search button
+    searchButton.addEventListener("click", () => {
+      // Get the location entered by the user
+      const location = searchInput.value;
+
+      // Fetch current weather data from the API
+      fetch(`${BASE_URL}/current.json?key=${API_KEY}&q=${location}&aqi=no`)
+        .then((response) => response.json()) // Convert response to JSON
+        .then((data) => {
+          const dateStr = data.location.localtime.split(" ")[0];
+          const timeStr = data.location.localtime.split(" ")[1];
+          // Get day name from date
+          const days = [
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat",
+          ];
+          const dayName = days[new Date(dateStr).getDay()];
+
+          temp.textContent = data.current.temp_c + "°C";
+          city.textContent = data.location.name;
+          // Update time, date, and day logic
+          time.textContent = timeStr;
+          date.textContent = dateStr;
+          day.textContent = dayName;
+
+          description.textContent = data.current.condition.text;
+          emoji.src = data.current.condition.icon;
+        })
+        .catch((error) => console.error("Error fetching weather:", error));
+
+      // Clear the search input field
+      searchInput.value = "";
+    });
+  </script>
+</html>
