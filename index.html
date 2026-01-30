@@ -146,5 +146,12 @@
       // Clear the search input field
       searchInput.value = "";
     });
+
+    // Add enter key event listener to the search input
+    searchInput.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        searchButton.click();
+      }
+    });
   </script>
 </html>
