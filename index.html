@@ -57,6 +57,12 @@
         align-items: center;
         height: 100%;
       }
+      .time,
+      .date,
+      .day {
+        font-size: 0.5em;
+        margin-right: 15px;
+      }
     </style>
   </head>
   <body>
@@ -64,14 +70,14 @@
       <div class="searchbar">
         <input
           style="
-            padding: 10px;
+            padding: 8px;
             background-color: slategrey;
             border: 2px solid white;
           "
           type="text"
           placeholder="Enter Location"
         />
-        <button style="padding: 10px; color: rgb(74, 74, 74)">Search</button>
+        <button style="padding: 8px; color: rgb(74, 74, 74)">Search</button>
       </div>
     </header>
     <main>
@@ -121,15 +127,7 @@
           const dateStr = data.location.localtime.split(" ")[0];
           const timeStr = data.location.localtime.split(" ")[1];
           // Get day name from date
-          const days = [
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat",
-          ];
+          const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
           const dayName = days[new Date(dateStr).getDay()];
 
           temp.textContent = data.current.temp_c + "°C";
