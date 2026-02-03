@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: darkslategrey;
+  font-size: 1.5em;
+}
+header {
+  height: 7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: slategrey;
+  padding: 4em;
+}
+footer {
+  height: 15em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input::placeholder {
+  color: white;
+}
+.text {
+  font-size: 15.7em;
+  color: rgb(27, 47, 47);
+  position: fixed;
+  top: 65%;
+  font-weight: bolder;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: white;
+  gap: 2em;
+}
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.temp {
+  font-size: 1.5em;
+  font-weight: bold;
+  letter-spacing: -0.05em;
+}
+.time,
+.date,
+.day,
+.unit {
+  margin-right: 15px;
+  font-size: 0.8em;
+  font-weight: lighter;
+}
+.city {
+  font-size: 1.5em;
+  font-weight: bold;
+  letter-spacing: -0.05em;
+}
+.status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.emoji {
+  width: 2em;
+  height: 2em;
+}
+.description {
+  font-size: 0.8em;
+  font-weight: lighter;
+  margin-top: -0.2em;
+}
+#search{
+    padding: 8px; 
+    color: rgb(74, 74, 74);
+}
+#input_city{
+    padding: 8px; 
+    background-color: slategrey; 
+    border: 2px solid white; 
+    color: white
+}

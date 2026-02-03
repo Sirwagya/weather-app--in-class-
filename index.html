@@ -3,110 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: "Poppins", sans-serif;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        background-color: darkslategrey;
-        font-size: 1.5em;
-      }
-      header {
-        height: 7em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: slategrey;
-        padding: 4em;
-      }
-      footer {
-        height: 15em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      input::placeholder {
-        color: white;
-      }
-      .text {
-        font-size: 15.7em;
-        color: rgb(27, 47, 47);
-        position: fixed;
-        top: 65%;
-        font-weight: bolder;
-      }
-      .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2em;
-        color: white;
-        gap: 2em;
-      }
-      main {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-      }
-      .temp {
-        font-size: 1.5em;
-        font-weight: bold;
-        letter-spacing: -0.05em;
-      }
-      .time,
-      .date,
-      .day,
-      .unit {
-        margin-right: 15px;
-        font-size: 0.8em;
-        font-weight: lighter;
-      }
-      .city {
-        font-size: 1.5em;
-        font-weight: bold;
-        letter-spacing: -0.05em;
-      }
-      .status {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: -0.01em;
-      }
-      .emoji {
-        width: 2em;
-        height: 2em;
-      }
-      .description {
-        font-size: 0.8em;
-        font-weight: lighter;
-        margin-top: -0.2em;
-      }
-    </style>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
       <div class="searchbar">
-        <input
-          style="
-            padding: 8px;
-            background-color: slategrey;
-            border: 2px solid white;
-            color: white;
-          "
-          type="text"
-          placeholder="Enter Location"
-        />
-        <button style="padding: 8px; color: rgb(74, 74, 74)">Search</button>
+        <input id="input_city" type="text" placeholder="Enter Location"/>
+        <button  id="search" >Search</button>
       </div>
     </header>
     <main>
@@ -117,105 +21,21 @@
         </div>
         <div class="location">
           <div class="city"></div>
-          <span class="time"></span><span class="date"></span
-          ><span class="day"></span>
+          <span class="time"></span>
+          <span class="date"></span>
+          <span class="day"></span>
         </div>
         <div class="status">
-          <img
-            class="emoji"
-            src="//cdn.weatherapi.com/weather/64x64/day/116.png"
-            alt=""
-          />
+          <img class="emoji" alt="" />
           <div class="description"></div>
         </div>
       </div>
     </main>
+
     <footer>
       <div class="text">Weather</div>
     </footer>
+
+    <script src="script.js"></script>
   </body>
-  <script>
-    // API Key for WeatherAPI
-    const API_KEY = "1f707380359e4d0ea8650134263001";
-    // Base URL for the Weather API requests
-    const BASE_URL = "https://api.weatherapi.com/v1";
-
-    // Select DOM elements to interact with
-    const searchInput = document.querySelector(".searchbar input");
-    const searchButton = document.querySelector(".searchbar button");
-    const temp = document.querySelector(".temp");
-    const city = document.querySelector(".city");
-    const time = document.querySelector(".time");
-    const date = document.querySelector(".date");
-    const day = document.querySelector(".day");
-    const description = document.querySelector(".description");
-    const emoji = document.querySelector(".emoji");
-    // Fetch weather data on page load using auto:ip \
-    fetch(
-      `https://api.weatherapi.com/v1/current.json?key=1f707380359e4d0ea8650134263001&q=auto:ip&aqi=no`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const dateStr = data.location.localtime.split(" ")[0];
-        const year = dateStr.split("-")[0];
-        const month = dateStr.split("-")[1];
-        const dayNum = dateStr.split("-")[2];
-        const timeStr = data.location.localtime.split(" ")[1];
-        // Get day name from date
-        const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        const dayName = days[new Date(dateStr).getDay()];
-
-        temp.textContent = data.current.temp_c + "°";
-        city.textContent = data.location.name;
-        // Update time, date, and day logic
-        time.textContent = timeStr;
-        date.textContent = dayNum + "-" + month + "-" + year;
-        day.textContent = dayName;
-
-        description.textContent = data.current.condition.text;
-        emoji.src = "https:" + data.current.condition.icon;
-      })
-      .catch((error) => console.error("Error fetching weather:", error));
-
-    // Add click event listener to the search button
-    searchButton.addEventListener("click", () => {
-      // Get the location entered by the user
-      const location = searchInput.value;
-
-      // Fetch current weather data from the API
-      fetch(`${BASE_URL}/current.json?key=${API_KEY}&q=${location}&aqi=no`)
-        .then((response) => response.json()) // Convert response to JSON
-        .then((data) => {
-          const dateStr = data.location.localtime.split(" ")[0];
-          const year = dateStr.split("-")[0];
-          const month = dateStr.split("-")[1];
-          const dayNum = dateStr.split("-")[2];
-          const timeStr = data.location.localtime.split(" ")[1];
-          // Get day name from date
-          const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-          const dayName = days[new Date(dateStr).getDay()];
-
-          temp.textContent = data.current.temp_c + "°";
-          city.textContent = data.location.name;
-          // Update time, date, and day logic
-          time.textContent = timeStr;
-          date.textContent = dayNum + "-" + month + "-" + year;
-          day.textContent = dayName;
-
-          description.textContent = data.current.condition.text;
-          emoji.src = "https:" + data.current.condition.icon;
-        })
-        .catch((error) => console.error("Error fetching weather:", error));
-
-      // Clear the search input field
-      searchInput.value = "";
-    });
-
-    // Add enter key event listener to the search input
-    searchInput.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        searchButton.click();
-      }
-    });
-  </script>
 </html>
